@@ -134,6 +134,9 @@
             background: linear-gradient(135deg, #94a3b8, #64748b);
             color: white;
             transition: all 0.15s ease;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
         }
 
         .attempt-counter {
@@ -354,7 +357,7 @@
     <div class="attempt-counter" id="counter"></div>
     
     <div id="message">
-        Yayyyy!!! I knew it! ❤️🥰
+        Yayyyy!!! I knew it AK! ❤️🥰
     </div>
     
     <div class="gif-container" id="gifContainer">
@@ -441,20 +444,28 @@ function moveNoButton() {
 // Mouse event for desktop
 noBtn.addEventListener("mouseover", moveNoButton);
 
-// Touch events for mobile
+// Touch events for mobile - move INSTANTLY on touch
 noBtn.addEventListener("touchstart", function(e) {
     e.preventDefault();
+    e.stopPropagation();
     moveNoButton();
-});
+}, { passive: false });
 
-// Prevent default touch behavior on mobile
+// Prevent any other touch interactions
 noBtn.addEventListener("touchmove", function(e) {
     e.preventDefault();
-});
+    e.stopPropagation();
+}, { passive: false });
 
-// Also move on click attempt for mobile
+noBtn.addEventListener("touchend", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+}, { passive: false });
+
+// Also move on click attempt for desktop
 noBtn.addEventListener("click", function(e) {
     e.preventDefault();
+    e.stopPropagation();
     moveNoButton();
 });
 
